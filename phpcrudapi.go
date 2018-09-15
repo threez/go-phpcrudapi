@@ -6,6 +6,7 @@ import (
 	"io"
 	"net/http"
 	"net/url"
+	"reflect"
 )
 
 type Client struct {
@@ -43,13 +44,13 @@ func (c Client) AllFiltered(ctx context.Context, f Filter, v interface{}) error 
 	defer resp.Body.Close()
 
 	// parse json
-	var inter map[string]tableResultSet
-	err = json.NewDecoder(resp.Body).Decode(&inter)
+	var rs resultSet
+	err = json.NewDecoder(resp.Body).Decode(&rs.Data)
 	if err != nil {
 		return err
 	}
-
-	return unmarshalSlice(st, table, inter, v)
+	rs.objectCache = make(map[string]reflect.Value)
+	return rs.unmarshalSlice(st, table, v)
 }
 
 func (c Client) newRequest(ctx context.Context, method, path, query string, body io.Reader) (*http.Request, error) {

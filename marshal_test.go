@@ -5,10 +5,10 @@ import (
 )
 
 type author struct {
-	ID        int    `json:"id" collection:"authors"`
-	Name      string `json:"name"`
-	CreatedAt Time   `json:"created_at"`
-	UpdatedAt Time   `json:"updated_at"`
+	ID        float64 `json:"id" collection:"authors"`
+	Name      string  `json:"name"`
+	CreatedAt Time    `json:"created_at"`
+	UpdatedAt Time    `json:"updated_at"`
 }
 
 func TestUnmarshalTable(t *testing.T) {
@@ -38,8 +38,8 @@ func TestUnmarshalTable(t *testing.T) {
 }
 
 type post struct {
-	ID       int        `json:"id" collection:"posts"`
-	UserID   int        `json:"user_id"`
+	ID       float64    `json:"id" collection:"posts"`
+	UserID   float64    `json:"user_id"`
 	Category *category  `json:"category_id" relation:"belongs-to"`
 	Content  string     `json:"content"`
 	Tags     []*tag     `relation:"many-to-many" via:"post_tags"`
@@ -47,18 +47,18 @@ type post struct {
 }
 
 type category struct {
-	ID   int    `json:"id" collection:"categories"`
-	Name string `json:"name"`
+	ID   float64 `json:"id" collection:"categories"`
+	Name string  `json:"name"`
 }
 
 type tag struct {
-	ID   int    `json:"id" collection:"tags"`
-	Name string `json:"name"`
+	ID   float64 `json:"id" collection:"tags"`
+	Name string  `json:"name"`
 }
 
 type comment struct {
-	ID      int    `json:"id" collection:"comments"`
-	Message string `json:"message"`
+	ID      float64 `json:"id" collection:"comments"`
+	Message string  `json:"message"`
 }
 
 func TestUnmarshalRelations(t *testing.T) {
